@@ -1,0 +1,10 @@
+select#month_days {
+    background-image: none;
+}
+.tabular input, .tabular select {
+    max-width: 75%;
+}
+
+legend {
+    font-size: 20px;
+}

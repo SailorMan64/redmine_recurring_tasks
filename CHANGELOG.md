@@ -1,3 +1,6 @@
+# 0.4.0
+* Added recurring issues list page to project menu, added ccs, and upgraded the date selector.
+
 # 0.3.6
 
 * Fix assigned to error

@@ -1,5 +1,26 @@
 # English strings go here for Rails i18n
 en:
+# --- Keys for our new management page ---
+  recurring_tasks: Recurring Tasks
+  permission_view_recurring_tasks_list: View recurring tasks list
+  permission_edit_schedule: Edit schedule
+
+  # --- Keys for our new humanize method ---
+  label_weekly_on: Weekly on %{days}
+  at_time: at %{time}
+  day: Day(s)
+  every_month: of every month
+
+# --- Keys for Day Names (can also be used by forms) ---
+  label_day_sunday: Sunday
+  label_day_monday: Monday
+  label_day_tuesday: Tuesday
+  label_day_wednesday: Wednesday
+  label_day_thursday: Thursday
+  label_day_friday: Friday
+  label_day_saturday: Saturday
+
+  # --- Original plugin keys needed by forms ---
   project_module_redmine_recurring_tasks: Redmine Recurring Tasks
   plugin_description: Plugin for creating scheduled tasks from template.
   schedule: Schedule
@@ -10,7 +31,7 @@ en:
   month_day: Day of a month
   last_day: Last day
 
-  note: You can choose day of a month or day of a week, not both. And if you chose day of a month, select 31 day, but the month have only 28 days, so task will not run.
+  note: You can choose day of a month or day of a week, but not both. If you chose the 29th, 30th, or 31st, and the month you picked does not have that many days, the reccurance will not run.
 
   permission_view_schedule: View schedule
   permission_manage_schedule: Manage schedule
@@ -19,7 +40,7 @@ en:
   label_edit_schedule: Edit schedule
 
   settings_associations: Issue associations to copy
-  settings_associations_warning: Warning! Incorrect settings may break plugin work. In case of problem try to turn off all options.
+  settings_associations_warning: Warning! Incorrect settings may break your plugin or redmine or both. In case of problems, try to turn off all options.
   settings_use_anonymous_user: Use anonymous user while copying issues
   settings_copied_issue_status: Copied issues status
   settings_copy_from_original: Copy from original issue

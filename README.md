@@ -7,15 +7,30 @@
 
 Plugin for creating scheduled tasks from templates.
 
+Change Log
+---
+= v0.4.0 * Updated for Remine 5.1
+
+
+Code contributors
+---
+* @Sailorman64 (Manny Palachuk)
+* @southbridgeio
+
+Compatibility
+---
+Tested only on Redmine 5.1.3.stable.23143.1
+
+
 # Installation
 
-* Ruby 2.2+
-* Redmine 3.3+
+* Ruby 3.1.6p260
+* Redmine 5.1+
 * Standard plugin installation:
 
 ```
 cd {REDMINE_ROOT}
-git clone https://github.com/southbridgeio/redmine_recurring_tasks.git plugins/redmine_recurring_tasks
+git clone https://github.com/SailorMan64/redmine_recurring_tasks.git plugins/redmine_recurring_tasks
 bundle install
 bundle exec rake redmine:plugins:migrate RAILS_ENV=production
 ```

@@ -21,8 +21,7 @@
         });
 
         function processOption() {
-          var isMonthDays = $("input[name='recurring_task[client_run_type]']:checked").val().toString() == 'month_days';
-
+         var isMonthDays = $("input[name='recurring_task[client_run_type]']:checked").val() === 'monthly';
           if (isMonthDays) {
             $('#month_days').prop('disabled', false);
             $('input[type="checkbox"].week_day').prop('checked', false);

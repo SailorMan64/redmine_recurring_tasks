@@ -1,5 +1,4 @@
-require File.dirname(__FILE__) + '/lib/redmine_recurring_tasks'
-
+# This loads all the patches and hooks, including our restored issue_patch.rb
 reloader = defined?(ActiveSupport::Reloader) ? ActiveSupport::Reloader : ActionDispatch::Reloader
 reloader.to_prepare do
   paths = '/lib/redmine_recurring_tasks/{patches/*_patch,hooks/*_hook}.rb'
@@ -8,28 +7,28 @@ reloader.to_prepare do
   end
 end
 
-Rails.application.config.eager_load_paths += Dir.glob("#{Rails.application.config.root}/plugins/redmine_recurring_tasks/{lib,app/models,app/controllers}")
-
 Redmine::Plugin.register :redmine_recurring_tasks do
   name 'Redmine Recurring Tasks'
   author 'Southbridge'
   description 'Plugin for creating scheduled tasks from template'
-  version '0.3.4'
-  url 'https://github.com/southbridgeio/redmine_recurring_tasks'
-  author_url 'https://github.com/southbridgeio'
+  version '0.4.0'
+  requires_redmine version_or_higher: '5.1'
 
-  requires_redmine version_or_higher: '3.4'
+  settings default: { #... your settings ...
+  }, partial: 'settings/redmine_recurring_tasks'
 
-  settings(
-    default: {
-      'associations' => RedmineRecurringTasks.issue_associations,
-      'use_anonymous_user' => 1
-    },
-    partial: 'settings/redmine_recurring_tasks'
-  )
+  # Add the new permission for our list page
+  permission :view_recurring_tasks_list, { recurring_tasks: :index }, require: :loggedin
 
   project_module :redmine_recurring_tasks do
     permission :view_schedule,   recurring_tasks: :show, read: true
-    permission :manage_schedule, recurring_tasks: [:new, :edit, :destroy, :update], require: :loggedin
+    permission :edit_schedule,   recurring_tasks: [:edit, :update], require: :loggedin
+    permission :manage_schedule, recurring_tasks: [:new, :destroy, :update], require: :loggedin
   end
+
+  # Add the new top menu item
+  menu :top_menu, :recurring_tasks, { controller: 'recurring_tasks', action: 'index' },
+       caption: 'Recurring Tasks',
+       after: :projects,
+       if: proc { User.current.allowed_to?(:view_recurring_tasks_list, nil, global: true) }
 end

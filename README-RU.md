@@ -6,13 +6,13 @@
 
 # Установка
 
-* Ruby 2.2+
-* Redmine 3.3+
+* Ruby 3.1.6p260
+* Redmine 5.1+
 * Стандартная установка плагина:
 
 ```
 cd {REDMINE_ROOT}
-git clone https://github.com/southbridgeio/redmine_recurring_tasks.git plugins/redmine_recurring_tasks
+git clone https://github.com/SailorMan64/redmine_recurring_tasks.git plugins/redmine_recurring_tasks
 bundle install
 bundle exec rake redmine:plugins:migrate RAILS_ENV=production
 ```

@@ -1,44 +1,37 @@
 module RedmineRecurringTasks
-  class IssuePresenter < SimpleDelegator
-    include RecurringTasksHelper
-    include Rails.application.routes.url_helpers
+  class IssuePresenter
+    # --- THIS IS THE FIX ---
+    # Include necessary helpers to get access to methods like l() and format_time()
+    include I18n
+    include Redmine::I18n
+    # --- END FIX ---
+
+    attr_reader :issue
+
+    def initialize(issue)
+      @issue = issue
+    end
 
     def schedule
-      return '' if recurring_task.blank?
-
-      if recurring_task_root.run_type == RecurringTask::RUN_TYPE_M_DAYS
-        return "#{recurring_task_root.month_days_parsed.join(', ')} #{recurring_task_root.months.map { |m| I18n.t('date.month_names')[m.to_i] }.join(', ')} — #{recurring_task_root.time.to_s(:time)}"
+      return '' unless issue.recurring_task.present?
+      if issue.recurring_task.run_type == RecurringTask::RUN_TYPE_M_DAYS
+        "#{l('day')} #{issue.recurring_task.month_days_parsed.join(', ')}. #{l('every_month')} #{issue.recurring_task.months_parsed.join(', ')}"
+      else
+        days = []
+        days << l(:label_day_sunday)    if issue.recurring_task.sunday?
+        days << l(:label_day_monday)    if issue.recurring_task.monday?
+        days << l(:label_day_tuesday)   if issue.recurring_task.tuesday?
+        days << l(:label_day_wednesday) if issue.recurring_task.wednesday?
+        days << l(:label_day_thursday)  if issue.recurring_task.thursday?
+        days << l(:label_day_friday)    if issue.recurring_task.friday?
+        days << l(:label_day_saturday)  if issue.recurring_task.saturday?
+        days.join(', ')
       end
-
-      days = recurring_task_root.days.map do |field|
-        <<-HTML
-          <li>
-            #{RecurringTask.human_attribute_name(field)}, #{recurring_task_root.time.to_s(:time)}
-          </li>
-        HTML
-      end
-
-      result =
-        <<-HTML
-          <ul>
-            #{days.join}
-          </ul>
-        HTML
-      result.html_safe
     end
 
     def schedule_template
-      root_issue = recurring_task_root&.issue
-      return '' if root_issue.blank? || root_issue == __getobj__
-
-      result =
-        <<-HTML
-          <div>
-            #{I18n.t(:template)}:
-            #{ActionController::Base.helpers.link_to("#{root_issue.subject.truncate(60)} ##{root_issue.id}", issue_path(root_issue))}
-          </div>
-        HTML
-      result.html_safe
+      return '' unless issue.recurring_task.present? && issue.recurring_task.time.present?
+      "#{l('at_time', time: issue.recurring_task.time.strftime('%H:%M'))}"
     end
   end
 end
