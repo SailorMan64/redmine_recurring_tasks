@@ -31,7 +31,10 @@ en:
   month_day: Day of a month
   last_day: Last day
 
-  note: You can choose day of a month or day of a week, but not both. If you chose the 29th, 30th, or 31st, and the month you picked does not have that many days, the reccurance will not run.
+  tracker_and_time_information: You can change the Tracker if desired, but you must select the exact time for the new Issue to be created.
+  months_of_year_information: Select the month or months the issue recurrence should happen.
+  day_of_month_week_information_1: You can choose day of a month or day of a week, but not both.
+  day_of_month_week_information_2: If you chose the 29th, 30th, or 31st, and the month you picked does not have that many days, the reccurance will not run.
 
   permission_view_schedule: View schedule
   permission_manage_schedule: Manage schedule

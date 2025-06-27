@@ -36,7 +36,9 @@
 
       <table class="weekly-schedule">
         <tr>
-          <td valign="top" width="20%">
+          <td class="box tabular" valign="top" width="20%">
+            <div style="color: #005782;"><%= l(:tracker_and_time_information) %><br><br><hr>
+            </div>
             <p>
               <label>
                 <%= RecurringTask.human_attribute_name(:tracker) %>
@@ -53,7 +55,9 @@
             </p>
           </td>
 
-          <td valign="top" width="30%">
+          <td class="box tabular" valign="top" width="30%">
+            <div style="color: #005782;"><%= l(:months_of_year_information) %><br><br><hr>
+            </div>
             <p>
               <label>
                 <%= l('month') %>
@@ -71,10 +75,10 @@
             </p>
           </td>
 
-          <td valign="top" width="60%">
-            <div><%= l('note') %><br><br></div>
-
-            <fieldset class="box tabular">
+          <td class="box tabular" valign="top" width="60%">
+            <div style="color: #005782;"><%= l(:day_of_month_week_information_1) %><br><%= l(:day_of_month_week_information_2) %><br><br><hr>
+            </div>
+            <fieldset style="border: none;">
               <div style="float: left; margin-left: 5em;">
                 <p>
                   <label>
