@@ -15,7 +15,8 @@ module RedmineRecurringTasks
     def schedule
       return '' unless issue.recurring_task.present?
       if issue.recurring_task.run_type == RecurringTask::RUN_TYPE_M_DAYS
-        "#{l('day')} #{issue.recurring_task.month_days_parsed.join(', ')}. #{l('every_month')} #{issue.recurring_task.months_parsed.join(', ')}"
+        "#{l('day')} #{issue.recurring_task.month_days_parsed.join(', ')}. #{l('every_month')} #{issue.recurring_task.months.map{|m| I18n.t("date.month_names")[m.to_i]}.join(', ')}"
+##        "#{l('day')} #{issue.recurring_task.month_days_parsed.join(', ')}. #{l('every_month')} #{issue.recurring_task.months_parsed.join(', ')}"
       else
         days = []
         days << l(:label_day_sunday)    if issue.recurring_task.sunday?

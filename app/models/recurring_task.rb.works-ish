@@ -10,13 +10,6 @@ class RecurringTask < ActiveRecord::Base
   before_save :clear_other_run_type_params
 
   # This method overrides the default to ensure it always returns an array.
-  def months
-    return [] if super.blank?
-    JSON.parse(super)
-  rescue JSON::ParserError
-    []
-  end
-
   def month_days
     return [] if super.blank? # 'super' gets the raw value from the database
     JSON.parse(super)
@@ -24,9 +17,21 @@ class RecurringTask < ActiveRecord::Base
     []
   end
 
-  def month_days_parsed
-    month_days.map{|x| x == 'last_day' ? Time.now.end_of_month.day.to_s : x}.compact.uniq
+  # --- FIX: Add methods to parse JSON strings into arrays ---
+  def months_parsed
+    return [] if months.blank?
+    JSON.parse(months)
+  rescue JSON::ParserError
+    []
   end
+
+  def month_days_parsed
+    return [] if month_days.blank?
+    JSON.parse(month_days)
+  rescue JSON::ParserError
+    []
+  end
+  # --- END FIX ---
 
   def humanize
     # ... (humanize method is unchanged) ...
@@ -39,30 +44,6 @@ class RecurringTask < ActiveRecord::Base
   def deep_clone
     # ... (deep_clone method is unchanged) ...
   end
-
-# This is the original class method from v1 that finds all schedules due to be run.
-  def self.schedules(current_time = Time.now)
-    week_day  = current_time.strftime('%A').downcase
-    month_day = current_time.day
-
-    # months
-    scope = where("months LIKE '%\"#{current_time.month.to_s}\"%'")
-
-    scope.select do |schedule|
-      if schedule.month_days.empty?
-        # week day
-        next unless schedule.public_send(week_day)
-      else
-        # month day
-        month_days = schedule.month_days_parsed
-        next unless month_days.include?(month_day.to_s)
-      end
-
-      # time
-      schedule.time_came?(current_time)
-    end
-  end
-
 
   # @return [Issue] copied issue
   def copy_issue(associations = [])
