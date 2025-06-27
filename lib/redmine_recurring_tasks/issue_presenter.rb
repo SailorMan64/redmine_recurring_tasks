@@ -1,10 +1,7 @@
 module RedmineRecurringTasks
   class IssuePresenter
-    # --- THIS IS THE FIX ---
-    # Include necessary helpers to get access to methods like l() and format_time()
     include I18n
     include Redmine::I18n
-    # --- END FIX ---
 
     attr_reader :issue
 

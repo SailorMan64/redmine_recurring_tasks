@@ -18,9 +18,9 @@ class RecurringTask < ActiveRecord::Base
   end
 
   def month_days
-    return [] if super.blank? # 'super' gets the raw value from the database
-    JSON.parse(super)
-  rescue JSON::ParserError
+    result = super
+    result = JSON.parse(result)
+  rescue
     []
   end
 
@@ -28,9 +28,31 @@ class RecurringTask < ActiveRecord::Base
     month_days.map{|x| x == 'last_day' ? Time.now.end_of_month.day.to_s : x}.compact.uniq
   end
 
-  def humanize
-    # ... (humanize method is unchanged) ...
+def humanize
+  parts = []
+  if run_type == :month_days
+    # This part for monthly schedules is correct as it uses standard keys
+    parts << "#{l('day')} #{month_days_parsed.join(', ')}. #{l('every_month')} #{months.map{|m| I18n.t("date.month_names")[m.to_i]}.join(', ')}"
+  else
+    # --- THIS IS THE FIX ---
+    # This now uses the correct 'label_day_...' keys from your en.yml file
+    days_text = []
+    days_text << l(:label_day_sunday)    if self.sunday?
+    days_text << l(:label_day_monday)    if self.monday?
+    days_text << l(:label_day_tuesday)   if self.tuesday?
+    days_text << l(:label_day_wednesday) if self.wednesday?
+    days_text << l(:label_day_thursday)  if self.thursday?
+    days_text << l(:label_day_friday)    if self.friday?
+    days_text << l(:label_day_saturday)  if self.saturday?
+    parts << l(:label_weekly_on, days: days_text.join(', ')) if days_text.present?
+    # --- END FIX ---
   end
+
+  # This was also missing the 'label_' prefix in my last version. Corrected now.
+  parts << l(:at_time, time: self.time.strftime('%H:%M')) if self.time
+
+  parts.join(' ')
+end
 
   def run_type
     # ... (run_type method is unchanged) ...

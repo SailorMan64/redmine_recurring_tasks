@@ -1,4 +1,4 @@
-<%= form_for @schedule, html: {id: 'recurring_task_form'} do |f| %>
+<%= form_for [@project, @schedule], url: {action: @schedule.new_record? ? :create : :update}, html: {id: 'recurring_task_form'} do |f| %>
   <div class="box">
     <fieldset class="box tabular"><legend><%= @schedule.issue.subject %></legend>
       <input type="hidden" name="issue_id" value="<%= @schedule.issue.id %>">
@@ -166,7 +166,7 @@
   <div>
     <%= f.submit ( f.object.new_record? ? l(:button_add) : l(:button_save)) %>
 
-    <% if @schedule.persisted? %><%= link_to(l(:button_delete), recurring_task_path(@schedule), method: :delete, data: {confirm: l(:text_are_you_sure)}) %> |
+    <% if @schedule.persisted? %><%= link_to(l(:button_delete), project_recurring_task_path(@project, @schedule), method: :delete, data: {confirm: l(:text_are_you_sure)}) %> |
     <% end %>
 
     <%= link_to(l(:button_cancel), issue_path(@issue)) %>

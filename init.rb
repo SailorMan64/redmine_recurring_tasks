@@ -18,8 +18,8 @@ Redmine::Plugin.register :redmine_recurring_tasks do
   }, partial: 'settings/redmine_recurring_tasks'
 
   # Add the new permission for our list page
-  permission :view_recurring_tasks_list, { recurring_tasks: :index }, require: :loggedin
-
+  #permission :view_recurring_tasks_list, { recurring_tasks: :index }, require: :loggedin
+  permission :view_recurring_tasks_list, { recurring_tasks: :index }, project_module: :redmine_recurring_tasks, require: :loggedin
   project_module :redmine_recurring_tasks do
     permission :view_schedule,   recurring_tasks: :show, read: true
     permission :edit_schedule,   recurring_tasks: [:edit, :update], require: :loggedin

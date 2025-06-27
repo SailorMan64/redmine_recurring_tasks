@@ -1,14 +1,8 @@
-<h2>Recurring Tasks</h2>
-
+<h2><%= l(:recurring_tasks) %></h2>
 <table class="list">
   <thead>
     <tr>
-      <th>#</th>
-      <th>Project</th>
-      <th>Tracker</th>
-      <th>Subject</th>
-      <th>Schedule</th>
-      <th></th>
+      <th>#</th><th><%=l(:field_project)%></th><th><%=l(:field_tracker)%></th><th><%=l(:field_subject)%></th><th><%=l(:schedule)%></th><th></th>
     </tr>
   </thead>
   <tbody>
@@ -20,8 +14,9 @@
         <td><%= link_to schedule.issue.subject, issue_path(schedule.issue) %></td>
         <td><%= schedule.humanize %></td>
         <td class="buttons">
-          <%= link_to l(:button_edit), edit_recurring_task_path(schedule), class: 'icon icon-edit' %>
-          <%= link_to l(:button_delete), recurring_task_path(schedule), method: :delete, data: { confirm: l(:text_are_you_sure) }, class: 'icon icon-del' %>
+          <%# --- These links are now correct --- %>
+          <%= link_to l(:button_edit), edit_project_recurring_task_path(@project, schedule), class: 'icon icon-edit' %>
+          <%= link_to l(:button_delete), project_recurring_task_path(@project, schedule), method: :delete, data: { confirm: l(:text_are_you_sure) }, class: 'icon icon-del' %>
         </td>
       </tr>
     <% end %>

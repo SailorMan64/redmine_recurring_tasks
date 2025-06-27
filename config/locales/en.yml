@@ -5,7 +5,7 @@ en:
   permission_view_recurring_tasks_list: View recurring tasks list
   permission_edit_schedule: Edit schedule
 
-  # --- Keys for our new humanize method ---
+# --- Keys for our new humanize method ---
   label_weekly_on: Weekly on %{days}
   at_time: at %{time}
   day: Day(s)
@@ -20,7 +20,7 @@ en:
   label_day_friday: Friday
   label_day_saturday: Saturday
 
-  # --- Original plugin keys needed by forms ---
+# --- Original plugin keys needed by forms ---
   project_module_redmine_recurring_tasks: Redmine Recurring Tasks
   plugin_description: Plugin for creating scheduled tasks from template.
   schedule: Schedule

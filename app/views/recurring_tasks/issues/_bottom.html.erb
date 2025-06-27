@@ -1,22 +1,16 @@
 <% if controller_name == 'issues' && action_name == 'show' && User.current.allowed_to?(:view_schedule, @project) %>
-
-<hr />
-
-<div class="redmine_recurring_tasks">
-  <% if User.current.allowed_to?(:manage_schedule, @project) && (@issue.recurring_task_root.nil? || @issue.recurring_task_root.issue == @issue) %>
-    <div class="contextual">
-      <% if @issue.recurring_task.present? %>
-        <a href="<%= edit_recurring_task_path(@issue.recurring_task_root.id) %>"><%= l(:button_change) %></a>
-      <% else %>
-        <a href="<%= new_recurring_task_path(issue_id: @issue.id) %>"><%= l(:button_add) %></a>
-      <% end %>
-    </div>
-  <% end %>
-
-  <% RedmineRecurringTasks::IssuePresenter.new(@issue).tap do |issue| %>
-    <p><strong><%= l(:schedule) %></strong></p>
-    <%= issue.schedule %>
-    <%= issue.schedule_template %>
-  <% end %>
-</div>
+  <hr />
+  <div class="redmine_recurring_tasks">
+    <% if User.current.allowed_to?(:manage_schedule, @project) %>
+      <div class="contextual">
+        <%# --- These links are now correct --- %>
+        <% if @issue.recurring_task.present? %>
+          <%= link_to l(:button_change), edit_project_recurring_task_path(@project, @issue.recurring_task) %>
+        <% else %>
+          <%= link_to l(:button_add), new_project_recurring_task_path(@project, issue_id: @issue.id) %>
+        <% end %>
+      </div>
+    <% end %>
+    <p><strong><%= l(:schedule) %>:</strong> <%= RedmineRecurringTasks::IssuePresenter.new(@issue).schedule %></p>
+  </div>
 <% end %>
