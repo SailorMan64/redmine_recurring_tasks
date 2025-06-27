@@ -6,7 +6,6 @@ en:
   permission_edit_schedule: Edit schedule
 
 # --- Keys for our new humanize method ---
-  label_weekly_on: Weekly on %{days}
   at_time: at %{time}
   day: Day(s)
   every_month: of every month

@@ -1,6 +1,10 @@
 <%= form_for [@project, @schedule], url: {action: @schedule.new_record? ? :create : :update}, html: {id: 'recurring_task_form'} do |f| %>
   <div class="box">
-    <fieldset class="box tabular"><legend><%= @schedule.issue.subject %></legend>
+    <fieldset class="box tabular"><legend><%= link_to(
+      "#{@schedule.issue.tracker.name} ##{@schedule.issue.id}: #{@schedule.issue.subject}",
+      issue_path(@schedule.issue),
+      class: "issue tracker-#{@schedule.issue.tracker_id} status-#{@schedule.issue.status_id}"
+    ) %></legend>
       <input type="hidden" name="issue_id" value="<%= @schedule.issue.id %>">
 
       <%= error_messages_for 'schedule' %>
@@ -21,17 +25,22 @@
         });
 
         function processOption() {
-         var isMonthDays = $("input[name='recurring_task[client_run_type]']:checked").val() === 'monthly';
-          if (isMonthDays) {
-            $('#month_days').prop('disabled', false);
-            $('input[type="checkbox"].week_day').prop('checked', false);
-            $('input[type="checkbox"].week_day').prop('disabled', true);
-          } else {
-            $('#month_days').prop('disabled', true);
-            $('#month_days option').prop('selected', false);
-            $('input[type="checkbox"].week_day').prop('disabled', false);
-          }
-        }
+           // --- THIS IS THE FIX ---
+           // The `run_type` method returns a Ruby symbol. When rendered in the form,
+           // its value is a string. This now correctly checks for the string 'month_days'.
+           var isMonthDays = $("input[name='recurring_task[client_run_type]']:checked").val() === 'month_days';
+           // --- END FIX ---
+
+           if (isMonthDays) {
+             $('#month_days').prop('disabled', false);
+             $('input[type="checkbox"].week_day').prop('checked', false);
+             $('input[type="checkbox"].week_day').prop('disabled', true);
+           } else {
+             $('#month_days').prop('disabled', true);
+             $('#month_days option').prop('selected', false);
+             $('input[type="checkbox"].week_day').prop('disabled', false);
+           }
+         }
       </script>
 
       <table class="weekly-schedule">

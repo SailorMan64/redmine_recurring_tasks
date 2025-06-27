@@ -8,3 +8,10 @@ select#month_days {
 legend {
     font-size: 20px;
 }
+
+/* .list .col-issue-id { width: 5%; } */
+.list .col-tracker  { width: 5%; }
+.list .col-project  { width: 10%; }
+.list .col-subject  { width: 20%; }
+/* .list .col-schedule { width: auto; }
+.list .col-buttons  { width: auto; text-align: center; } */

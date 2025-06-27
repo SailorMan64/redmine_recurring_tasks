@@ -2,17 +2,17 @@
 <table class="list">
   <thead>
     <tr>
-      <th>#</th><th><%=l(:field_project)%></th><th><%=l(:field_tracker)%></th><th><%=l(:field_subject)%></th><th><%=l(:schedule)%></th><th></th>
+      <th>#</th><th><%=l(:field_tracker)%></th><th><%=l(:field_project)%></th><th><%=l(:field_subject)%></th><th><%=l(:schedule)%></th><th></th>
     </tr>
   </thead>
   <tbody>
     <% @schedules.each do |schedule| %>
       <tr class="<%= cycle('odd', 'even') %>">
-        <td><%= link_to schedule.issue.id, issue_path(schedule.issue) %></td>
-        <td><%= link_to schedule.issue.project.name, project_path(schedule.issue.project) %></td>
-        <td><%= schedule.issue.tracker.name %></td>
-        <td><%= link_to schedule.issue.subject, issue_path(schedule.issue) %></td>
-        <td><%= schedule.humanize %></td>
+        <td class="col-issue-id"><%= link_to schedule.issue.id, issue_path(schedule.issue) %></td>
+        <td class="col-tracker"><%= schedule.issue.tracker.name %></td>
+        <td class="col-project"><%= link_to schedule.issue.project.name, project_path(schedule.issue.project) %></td>
+        <td class="col-subject"><%= link_to schedule.issue.subject, issue_path(schedule.issue) %></td>
+        <td class="col-schedule"><%= schedule.humanize %></td>
         <td class="buttons">
           <%# This now uses the schedule's actual project to build the correct URL %>
           <%= link_to l(:button_edit), edit_project_recurring_task_path(schedule.issue.project, schedule), class: 'icon icon-edit' %>
