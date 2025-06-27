@@ -26,9 +26,9 @@ Redmine::Plugin.register :redmine_recurring_tasks do
     permission :manage_schedule, recurring_tasks: [:new, :destroy, :update], require: :loggedin
   end
 
-  # Add the new top menu item
-  menu :top_menu, :recurring_tasks, { controller: 'recurring_tasks', action: 'index' },
-       caption: 'Recurring Tasks',
-       after: :projects,
-       if: proc { User.current.allowed_to?(:view_recurring_tasks_list, nil, global: true) }
+  # Add the new project menu item
+     menu :project_menu, :recurring_tasks, { controller: 'recurring_tasks', action: 'index' },
+     caption: 'Recurring Tasks',
+     after: :settings, # A good place for it is after the project "Settings" tab
+     param: :project_id # This is the crucial part
 end

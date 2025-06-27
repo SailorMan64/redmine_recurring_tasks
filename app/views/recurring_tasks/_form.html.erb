@@ -164,7 +164,7 @@
   </div>
 
   <div>
-    <%= f.submit ( f.object.new_record? ? l(:button_add) : l(:button_change)) %>
+    <%= f.submit ( f.object.new_record? ? l(:button_add) : l(:button_save)) %>
 
     <% if @schedule.persisted? %><%= link_to(l(:button_delete), recurring_task_path(@schedule), method: :delete, data: {confirm: l(:text_are_you_sure)}) %> |
     <% end %>
