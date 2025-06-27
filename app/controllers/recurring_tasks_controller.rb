@@ -6,7 +6,13 @@ class RecurringTasksController < ApplicationController
   before_action :authorize
 
   def index
-    @schedules = @project.recurring_tasks.joins(:issue).order('issues.id DESC')
+  # Get the IDs of the current project and all its descendants
+  project_ids = @project.self_and_descendants.pluck(:id)
+
+  # Find all recurring tasks where the associated issue's project_id is in our list
+  @schedules = RecurringTask.joins(:issue)
+                            .where(issues: { project_id: project_ids })
+                            .order('issues.id DESC')
   end
 
   def new

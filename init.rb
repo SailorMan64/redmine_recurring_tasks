@@ -23,7 +23,7 @@ Redmine::Plugin.register :redmine_recurring_tasks do
   project_module :redmine_recurring_tasks do
     permission :view_schedule,   recurring_tasks: :show, read: true
     permission :edit_schedule,   recurring_tasks: [:edit, :update], require: :loggedin
-    permission :manage_schedule, recurring_tasks: [:new, :destroy, :update], require: :loggedin
+    permission :manage_schedule, recurring_tasks: [:new, :create, :destroy, :update], require: :loggedin
   end
 
   # Add the new project menu item

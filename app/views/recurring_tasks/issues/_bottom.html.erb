@@ -2,14 +2,14 @@
   <hr />
   <div class="redmine_recurring_tasks">
     <% if User.current.allowed_to?(:manage_schedule, @project) %>
-      <div class="contextual">
-        <%# --- These links are now correct --- %>
-        <% if @issue.recurring_task.present? %>
-          <%= link_to l(:button_change), edit_project_recurring_task_path(@project, @issue.recurring_task) %>
-        <% else %>
-          <%= link_to l(:button_add), new_project_recurring_task_path(@project, issue_id: @issue.id) %>
-        <% end %>
-      </div>
+    <div class="contextual">
+      <% if @issue.recurring_task.present? %>
+        <%= link_to(l(:button_change), edit_project_recurring_task_path(@project, @issue.recurring_task), class: 'icon icon-edit') %>
+      <% else %>
+        <%# This now correctly generates a project-aware URL %>
+        <%= link_to(l(:button_add), new_project_recurring_task_path(@project, issue_id: @issue.id), class: 'icon icon-add') %>
+      <% end %>
+    </div>
     <% end %>
     <p><strong><%= l(:schedule) %>:</strong> <%= RedmineRecurringTasks::IssuePresenter.new(@issue).schedule %></p>
   </div>
