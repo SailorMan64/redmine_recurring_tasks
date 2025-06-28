@@ -1,6 +1,6 @@
 <%= form_for [@project, @schedule], url: {action: @schedule.new_record? ? :create : :update}, html: {id: 'recurring_task_form'} do |f| %>
   <div class="box">
-    <fieldset class="box tabular"><legend><%= link_to(
+    <fieldset class="box tabular"><legend class="recurring_title"><%= link_to(
       "#{@schedule.issue.tracker.name} ##{@schedule.issue.id}: #{@schedule.issue.subject}",
       issue_path(@schedule.issue),
       class: "issue tracker-#{@schedule.issue.tracker_id} status-#{@schedule.issue.status_id}"

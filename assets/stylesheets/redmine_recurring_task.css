@@ -5,13 +5,12 @@ select#month_days {
     max-width: 75%;
 }
 
-legend {
-    font-size: 20px;
-}
+.recurring_title {
+    font-size: 18px;
 
 /* .list .col-issue-id { width: 5%; } */
 .list .col-tracker  { width: 5%; }
-.list .col-project  { width: 10%; }
-.list .col-subject  { width: 20%; }
+.list .col-project  { width: 20%; }
+.list .col-subject  { width: 25%; }
 /* .list .col-schedule { width: auto; }
 .list .col-buttons  { width: auto; text-align: center; } */

@@ -20,7 +20,7 @@ en:
   label_day_saturday: Saturday
 
 # --- Original plugin keys needed by forms ---
-  project_module_redmine_recurring_tasks: Redmine Recurring Tasks
+  project_module_redmine_recurring_tasks: Recurring Tasks
   plugin_description: Plugin for creating scheduled tasks from template.
   schedule: Schedule
   template: Template
