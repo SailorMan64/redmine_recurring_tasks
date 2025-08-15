@@ -127,32 +127,36 @@ class RecurringTask < ActiveRecord::Base
 
   # Our new method for the overview page
   def humanize
+    # A shorter alias for the helpers to keep the code clean
+    h = ApplicationController.helpers
+
     parts = []
 
     if self.run_type == :month_days
     # This logic correctly formats monthly schedules
       day_list = self.month_days_parsed.join(', ')
       month_names_str = self.months.map { |m| I18n.t("date.month_names")[m.to_i] }.join(', ')
-      parts << "#{l(:day)} #{day_list} #{l(:every_month)} #{month_names_str}"
+      parts << "#{h.l(:day)} #{day_list} #{h.l(:every_month)} #{month_names_str}"
     else
     # This logic correctly formats weekly schedules
       days_text = []
-      days_text << l(:label_day_sunday)    if self.sunday?
-      days_text << l(:label_day_monday)    if self.monday?
-      days_text << l(:label_day_tuesday)   if self.tuesday?
-      days_text << l(:label_day_wednesday) if self.wednesday?
-      days_text << l(:label_day_thursday)  if self.thursday?
-      days_text << l(:label_day_friday)    if self.friday?
-      days_text << l(:label_day_saturday)  if self.saturday?
+      days_text << h.l(:label_day_sunday)    if self.sunday?
+      days_text << h.l(:label_day_monday)    if self.monday?
+      days_text << h.l(:label_day_tuesday)   if self.tuesday?
+      days_text << h.l(:label_day_wednesday) if self.wednesday?
+      days_text << h.l(:label_day_thursday)  if self.thursday?
+      days_text << h.l(:label_day_friday)    if self.friday?
+      days_text << h.l(:label_day_saturday)  if self.saturday?
 
     # Manually construct the string instead of using a complex translation key
       parts << "Weekly on #{days_text.join(', ')}" if days_text.present?
     end
 
     # Append the time using the simple 'at_time' key
-    parts << l(:at_time, time: self.time.strftime('%H:%M')) if self.time.present?
+    parts << h.l(:at_time, time: self.time.strftime('%H:%M')) if self.time.present?
     parts.join(' ')
   end
+
 
   private
 
